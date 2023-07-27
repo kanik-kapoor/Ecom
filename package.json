@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon server.js",
-    "build:css": "postcss public/css/tailwind_input.css -o public/css/tailwind.css"
+    "dev": "nodemon server.js"
   },
   "author": "Rahul bhardwaj",
   "license": "ISC",
