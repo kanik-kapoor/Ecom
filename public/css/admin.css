@@ -1,0 +1,7 @@
+#drop_view{
+    display: none;
+    
+    &.is_active{
+      display: none;
+    }
+}
