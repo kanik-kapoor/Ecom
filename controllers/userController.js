@@ -19,7 +19,7 @@ const createUser = catchAsyncError(async (req, res, next) => {
     },
   });
   res.redirect('/products')
-  // sendToken(user, 201, res);
+  sendToken(user, 201, res);
 });
 
 const register = async (req,res) =>{
