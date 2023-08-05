@@ -1,0 +1,154 @@
+<div class="relative z-10 dialog transition ease-in-out delay-150" role="dialog" aria-modal="true" id="dialogs" style="display: none;">
+  <!--
+    Background backdrop, show/hide based on modal state.
+
+    Entering: "ease-out duration-300"
+      From: "opacity-0"
+      To: "opacity-100"
+    Leaving: "ease-in duration-200"
+      From: "opacity-100"
+      To: "opacity-0"
+  -->
+  <div class="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block"></div>
+
+  <div class="fixed inset-0 z-10 overflow-y-auto">
+    <div class="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
+      <!--
+        Modal panel, show/hide based on modal state.
+
+        Entering: "ease-out duration-300"
+          From: "opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
+          To: "opacity-100 translate-y-0 md:scale-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100 translate-y-0 md:scale-100"
+          To: "opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
+      -->
+      <div class="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
+        <div class="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+          <button type="button" class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8 z-10" onclick="closeButton()">
+            <span class="sr-only">Close</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          {{!-- <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
+            <div class="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
+              <img src="https://source.unsplash.com/random/?Products/" alt="Two each of gray, white, and black shirts arranged on table." class="object-cover object-center">
+            </div>
+            <div class="sm:col-span-8 lg:col-span-7" style="position: relative; height:100%">
+              <h2 class="text-2xl font-bold text-gray-900 sm:pr-12" id="dialog_name">{{product.name}}</h2>
+
+              <section aria-labelledby="information-heading" class="mt-2">
+                <h3 id="information-heading" class="sr-only">Product information</h3>
+                <p class="mt-1 truncate text-xs leading-5 text-gray-500 mb-2">{{this.type}} / {{this.category}}</p>
+                <p class="text-2xl text-gray-900 mb-2" id="price">₹ {{product.price}}</p>
+                <p class="text-sm text-gray-900" id="description">{{product.price}}</p>
+              </section>
+
+              <section aria-labelledby="options-heading" class="absolute bottom-0 w-full">
+                <h3 id="options-heading" class="sr-only">Product options</h3>
+                <p class="text-base text-gray-900" id="description">Do you want to delete this product?</p>
+                <input type="hidden" id="_id">
+                <div class="flex items-center justify-center gap-x-6">
+                <button type="submit" onclick="deleteProduct()" class="mt-6 flex w-4/5 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Delete</button>
+                <button type="button" class="mt-6 flex w-4/5 items-center justify-center rounded-md border border-transparent bg-gray-200 font-semibold px-8 py-3 text-base font-medium leading-6 text-gray-900 hover:bg-gray-300" onclick="closeButton()">Cancel</button>
+                </div>
+              </section>
+            </div>
+          </div> --}}
+
+              <main class="w-full">
+    {{!-- <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8"> --}}
+      {{!-- <form action="/admin/products/new" method="post"> --}}
+        <div class="space-y-12">
+            <div class="mt-1 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              <div class="sm:col-span-4">
+                <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Title</label>
+                <div class="mt-2">
+                  <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    {{!-- <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span> --}}
+                    <input type="text" name="name" id="names" value=""  onchange="editProduct('names')" class="block flex-1 border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Short sleeve t-shirt">
+                  </div>
+                </div>
+              </div>
+              <div class="col-span-full">
+                <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Description</label>
+                <div class="mt-2">
+                  <textarea id="descriptions" name="description" value="" onchange="editProduct('descriptions')" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="price" class="block text-sm font-medium leading-6 text-gray-900">Price</label>
+                  <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md mt-2">
+                    <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">₹</span>
+                    <input type="text" name="price" id="prices" value="" onchange="editProduct('prices')" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="0.00">
+                  </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="compare_price" class="block text-sm font-medium leading-6 text-gray-900">Compare-at price</label>
+                  <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md mt-2">
+                    <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">₹</span>
+                    <input type="text" name="compare_price" id="compare_prices" value="" onchange="editProduct('compare_prices')" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="0.00">
+                  </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="stock" class="block text-sm font-medium leading-6 text-gray-900">Quantity</label>
+                  <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md mt-2">
+                    <input type="text" name="stock" id="stocks" value="" onchange="editProduct('stocks')" class="block flex-1 border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="0">
+                  </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="category" class="block text-sm font-medium leading-6 text-gray-900">Product category</label>
+                  <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md mt-2">
+                    <input type="text" name="category" id="categorys" value="" onchange="editProduct('categorys')" class="block flex-1 border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                  </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="collection" class="block text-sm font-medium leading-6 text-gray-900">Collections</label>
+                  <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md mt-2">
+                    <input type="text" name="collection" id="collections" value="" onchange="editProduct('collections')" class="block flex-1 border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
+                  </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="type" class="block text-sm font-medium leading-6 text-gray-900">Men/Women</label>
+                <div class="mt-2">
+                  <select id="types" name="type" value="" onchange="editProduct('types')" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" style="max-width: -webkit-fill-available;">
+                    <option>Men</option>
+                    <option>Women</option>
+                    <option>Divided</option>
+                  </select>
+              </div>
+              </div>
+              {{!-- <div class="col-span-full">
+                <label for="cover-photo" class="block text-sm font-medium leading-6 text-gray-900">Media</label>
+                <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                  <div class="text-center">
+                    <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
+                    </svg>
+                    <div class="mt-4 flex text-sm leading-6 text-gray-600">
+                      <label for="image" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                        <span>Upload files</span>
+                        <input id="" name="" type="file" class="sr-only">
+                      </label>
+                      <p class="pl-1">or drag and drop</p>
+                    </div>
+                    <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                  </div>
+                </div>
+              </div> --}}
+            </div>
+        </div>
+        <div class="mt-6 flex items-center justify-end gap-x-6">
+          <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+          <button type="submit" onclick="updateProduct()" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Done</button>
+        </div>
+      {{!-- </form> --}}
+    {{!-- </div> --}}
+  </main>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

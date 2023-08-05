@@ -16,8 +16,13 @@ app.use(cors())
 app.set('view engine', '.hbs');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 app.use(express.static(path.join(__dirname, '/public')));
-app.engine('.hbs', expressHbs.engine({ extname: '.hbs', defaultLayout: "main",handlebars: allowInsecurePrototypeAccess(Handlebars)}));
-// route imports 
+app.engine('.hbs', expressHbs.engine({ extname: '.hbs', defaultLayout: "main",handlebars: allowInsecurePrototypeAccess(Handlebars), helpers:{
+    json: function (context) { return JSON.stringify(context); }
+}}));
+
+// Handlebars.registerHelper('json', function(context) {
+//     return JSON.stringify(context);
+//   }); 
 
 app.use("/", product);
 app.use("/", user);

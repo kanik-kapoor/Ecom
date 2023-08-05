@@ -18,7 +18,7 @@ const createUser = catchAsyncError(async (req, res, next) => {
       url: "this is url",
     },
   });
-  res.redirect('/products')
+  // res.redirect('/products')
   sendToken(user, 201, res);
 });
 
@@ -188,12 +188,14 @@ const updateUserpPofile = catchAsyncError(async (req, res, next) => {
 });
 //get all users admin
 const getAllUsers = catchAsyncError(async (req, res, next) => {
- const users = await User.find()
+ const users = await User.find().lean()
 
-  res.status(200).json({
-    success: true,
-    users
-  });
+  // res.status(200).json({
+  //   success: true,
+  //   users
+  // });
+  // console.log(users);
+  res.render('user-details',{users})
 });
 
 // get single user detail --Admin

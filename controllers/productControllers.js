@@ -7,24 +7,34 @@ const ApiFeatures = require("../utils/apiFeatures.js");
 const createProduct = catchAsyncErrorHandler(async (req, res, next) => {
   req.body.user = req.user.id;
   const product = await Product.create(req.body);
-  res.status(200).json({
-    message: "Product created successfully.",
-    product: product,
-  });
+  // res.status(200).json({
+  //   message: "Product created successfully.",
+  //   product: product,
+  // });
+  res.render('new-product')
 });
 
 const newProduct = async (req,res) =>{
-  res.render('admin')
+  res.render('new-product')
 }
 
-//get all products
-const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
-  const resultPerpage = 5;
+const deleteProduct = async (req,res) =>{
   const productCount = await Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find().lean(), req.query)
     .search()
     .filter()
-    .pagination(resultPerpage);
+  const product = await apiFeatures.query;
+  res.render('delete-product', {product, productCount})
+}
+
+//get all products
+const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
+  // const resultPerpage = 5;
+  const productCount = await Product.countDocuments();
+  const apiFeatures = new ApiFeatures(Product.find().lean(), req.query)
+    .search()
+    .filter()
+    // .pagination(resultPerpage);
   const product = await apiFeatures.query;
   // res.status(200).json({
   //   success: true,
@@ -39,6 +49,10 @@ const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
 //update product --Admin
 
 const updateProducts = catchAsyncErrorHandler(async (req, res, next) => {
+  // console.log("body");
+  // console.log(req.params.id);
+  console.log("body");
+  // console.log(req.body);
   let product = Product.findById(req.params.id);
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
@@ -53,6 +67,7 @@ const updateProducts = catchAsyncErrorHandler(async (req, res, next) => {
     success: true,
     product: product,
   });
+  // console.log(req.body);
 });
 //delete product -- Admin
 
@@ -85,7 +100,7 @@ const productDetail = catchAsyncErrorHandler(async (req, res, next) => {
   //   success: true,
   //   product: product,
   // });
-  res.render('product',{product:product})
+  res.render('product',{product})
 });
 
 //create new review or update the review
@@ -186,6 +201,7 @@ module.exports = {
   getAllProducts,
   createProduct,
   newProduct,
+  deleteProduct,
   updateProducts,
   deleteProducts,
   productDetail,
