@@ -3,7 +3,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const app = express()
 const errorMiddleware = require('./middleware/error.js')
-const path = require("path");
+// const path = require("path");
 var expressHbs = require('express-handlebars');
 const user = require('./routes/userRoutes.js')
 const product = require('./routes/productRoute.js');
@@ -15,7 +15,7 @@ app.use(cookieParser())
 app.use(cors())
 app.set('view engine', '.hbs');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(__dirname + '/public'));
 app.engine('.hbs', expressHbs.engine({ extname: '.hbs', defaultLayout: "main",handlebars: allowInsecurePrototypeAccess(Handlebars), helpers:{
     json: function (context) { return JSON.stringify(context); }
 }}));
