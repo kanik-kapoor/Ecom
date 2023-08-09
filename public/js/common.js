@@ -1,12 +1,3 @@
-function toggle() {
-  var x = document.getElementById("user-menu-list");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-
 function productPopup(product){
   const {name, price,description, reviews, _id} = product 
   var x = document.getElementById("dialog");
@@ -22,7 +13,6 @@ function productPopup(product){
 }
 
 let id = ''
-
 let nameb = ""
 let descriptionb = ""
 let priceb = ""
@@ -31,10 +21,6 @@ let categoryb = ""
 let typeb = ""
 let compare_priceb = ""
 
-
-
-
-
 function productPopups(product){
   console.log(product)
   const {name,description, price, reviews, _id, compare_price,stock,category,type} = product 
@@ -42,7 +28,6 @@ function productPopups(product){
   console.log(compare_price,type,name, price,description, reviews, _id);
   var x = document.getElementById("dialogs");
   x.style.display = "block";
-
 
   const titles= document.getElementById("names")
   titles.value = name
@@ -67,30 +52,19 @@ function productPopups(product){
   const categorys= document.getElementById("categorys")
   categorys.value = category
   categoryb =  category
-  // const collections= document.getElementById("collections")
-  // productName.value = name
-
   const types= document.getElementById("types")
   types.value = type
   typeb = type
-
-
-  // const productDescription= document.getElementById("description")
-  // productDescription.innerHTML =`${description}`
-  // const productId= document.getElementById("_id")
-  // productId.value =`${_id}`
-
 }
 
-
-
-
-
-function closeButton() {
-  var x = document.getElementById("dialog");
-  var y = document.getElementById("dialogs");
-  x.style.display = "none";
-  y.style.display = "none";
+function closeButton(id) {
+  var x = document.getElementById(id);
+  console.log(id);
+  if (x.style.display == "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none"
+  }
 }
 
 async function deleteProduct() {
@@ -112,19 +86,7 @@ async function deleteProduct() {
   }
 }
 
-
-// let name = ""
-// let description = ""
-// let price = ""
-// let stock = ""
-// let category = ""
-// let type = ""
-// let compare_price = ""
-
-
-
 function editProduct(id) {
-
 if(id==="names"){
   nameb = event.target.value
 }
@@ -146,14 +108,9 @@ if(id==="types"){
 if(id==="compare_prices"){
   compare_priceb = event.target.value
 }
-
-
 }
 
-
 async function updateProduct() {
-  // let datas = new FormData()
-  // console.log(datas);
   try {
     data = {
       name: nameb,
@@ -190,5 +147,29 @@ function adminPannel() {
     x.style.display = "block";
   } else {
     x.style.display = "none"
+  }
+}
+
+function womenFlyout(){
+  var x = document.getElementById("womenFlyout");
+  var y = document.getElementById("menFlyout");
+  if (x.style.display == "none") {
+    x.style.display = "block";
+    y.style.display = "none"
+  } else {
+    x.style.display = "none"
+    y.style.display = "none"
+  }
+}
+
+function menFlyout(){
+  var y = document.getElementById("womenFlyout");
+  var x = document.getElementById("menFlyout");
+  if (x.style.display == "none") {
+    x.style.display = "block";
+    y.style.display = "none"
+  } else {
+    x.style.display = "none"
+    y.style.display = "none"
   }
 }

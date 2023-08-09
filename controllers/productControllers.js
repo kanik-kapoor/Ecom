@@ -2,7 +2,8 @@ const Product = require("../models/productModel");
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrorHandler = require("../middleware/catchAsyncError.js");
 const ApiFeatures = require("../utils/apiFeatures.js");
-
+const User = require("../models/userModel.js");
+const { getUserDetail } = require("./userController");
 //create product --Admin
 const createProduct = catchAsyncErrorHandler(async (req, res, next) => {
   req.body.user = req.user.id;
@@ -16,6 +17,10 @@ const createProduct = catchAsyncErrorHandler(async (req, res, next) => {
 
 const newProduct = async (req,res) =>{
   res.render('new-product')
+}
+
+const searchProduct = async (req,res) =>{
+  res.render('filter')
 }
 
 const deleteProduct = async (req,res) =>{
@@ -197,6 +202,39 @@ const deleteReviews = catchAsyncErrorHandler(async (req, res, next) => {
   });
 });
 
+const addToCart = catchAsyncErrorHandler( async (req, res) => {
+  const userId = req.user._id; // Assuming you have authentication middleware that provides user information
+  const productId = req.params.id;
+  const quantity = req.body.quantity; // Assuming the quantity is sent in the request body
+
+  try {
+    const user = await User.findById(userId);
+    const product = await Product.findById(productId);
+
+    if (!user || !product) {
+      return res.status(404).json({ message: 'User or product not found.' });
+    }
+
+    // Check if the product is already in the cart
+    const existingCartItem = user.cart.find(item => item.product.equals(productId));
+
+    if (existingCartItem) {
+      existingCartItem.quantity += quantity;
+    } else {
+      user.cart.push({ product: productId, quantity: quantity });
+    }
+
+    await user.save();
+    
+    return res.status(200).json({ message: 'Product added to cart successfully.' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error.' });
+  }
+}
+
+)
+
 module.exports = {
   getAllProducts,
   createProduct,
@@ -208,4 +246,7 @@ module.exports = {
   createProuctReview,
   getAllreviewsSingleProduct,
   deleteReviews,
+  searchProduct,
+  addToCart,
+  // cartDetails
 };

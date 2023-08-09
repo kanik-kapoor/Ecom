@@ -3,6 +3,8 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const cartItemSchema = require("./cartItemModel")
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -39,6 +41,7 @@ const userSchema = new mongoose.Schema({
     // enum: ["user", "admin"],
     default: "user",
   },
+  cart:[cartItemSchema],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });

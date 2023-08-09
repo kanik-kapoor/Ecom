@@ -250,6 +250,19 @@ const deleteUserByAdmin =  catchAsyncError (async(req ,res, next)=>{
       })
 })
 
+const cartDetails = catchAsyncError (
+  async(req, res, next) =>{
+
+    try {
+      const user = await User.findById(req.user.id);
+      console.log(user)
+  
+    } catch (error) {
+       console.log(error.message)
+    }
+  }
+)
+
 module.exports = {
   createUser,
   register,
@@ -265,5 +278,6 @@ module.exports = {
   getAllUsers,
   getSingleUserDetail,
   updateUserbyAdmin,
-  deleteUserByAdmin
+  deleteUserByAdmin,
+  cartDetails
 };
