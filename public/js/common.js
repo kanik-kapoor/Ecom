@@ -153,23 +153,67 @@ function adminPannel() {
 function womenFlyout(){
   var x = document.getElementById("womenFlyout");
   var y = document.getElementById("menFlyout");
+  var z = document.getElementById("womenFlyoutTab");
+  var a = document.getElementById("menFlyoutTab");
   if (x.style.display == "none") {
     x.style.display = "block";
     y.style.display = "none"
+    z.classList.add('border-indigo-600','text-indigo-600');
+    z.classList.remove('border-transparent' ,'text-gray-700' ,'hover:text-gray-800');
+    a.classList.add('border-transparent' ,'text-gray-700' ,'hover:text-gray-800');
+    a.classList.remove('border-indigo-600','text-indigo-600');
   } else {
     x.style.display = "none"
     y.style.display = "none"
+    z.classList.remove('border-indigo-600','text-indigo-600');
+    z.classList.add('border-transparent' ,'text-gray-700' ,'hover:text-gray-800');
+    a.classList.add('border-transparent' ,'text-gray-700' ,'hover:text-gray-800');
+    a.classList.remove('border-indigo-600','text-indigo-600');
   }
 }
 
 function menFlyout(){
   var y = document.getElementById("womenFlyout");
   var x = document.getElementById("menFlyout");
+  var a = document.getElementById("womenFlyoutTab");
+  var z = document.getElementById("menFlyoutTab");
   if (x.style.display == "none") {
     x.style.display = "block";
     y.style.display = "none"
+    z.classList.add('border-indigo-600','text-indigo-600');
+    z.classList.remove('border-transparent' ,'text-gray-700' ,'hover:text-gray-800');
+    a.classList.add('border-transparent' ,'text-gray-700' ,'hover:text-gray-800');
+    a.classList.remove('border-indigo-600','text-indigo-600');
   } else {
     x.style.display = "none"
     y.style.display = "none"
+    z.classList.remove('border-indigo-600','text-indigo-600');
+    z.classList.add('border-transparent' ,'text-gray-700' ,'hover:text-gray-800');
+    a.classList.add('border-transparent' ,'text-gray-700' ,'hover:text-gray-800');
+    a.classList.remove('border-indigo-600','text-indigo-600');
   }
+}
+
+function mobWomenFlyout(){
+  var x = document.getElementById("tabs-1-panel-1");
+  var y = document.getElementById("tabs-1-panel-2");
+  var z = document.getElementById("tabs-1-tab-1");
+  var a = document.getElementById("tabs-1-tab-2");
+  z.classList.add('border-indigo-600','text-indigo-600');
+  z.classList.remove('border-transparent');
+  a.classList.remove('border-indigo-600','text-indigo-600');
+  x.style.display = "block";
+  y.style.display = "none"
+}
+
+function mobMenFlyout(){
+  var y = document.getElementById("tabs-1-panel-1");
+  var x = document.getElementById("tabs-1-panel-2");
+  var a = document.getElementById("tabs-1-tab-1");
+  var z = document.getElementById("tabs-1-tab-2");
+  z.classList.add('border-indigo-600','text-indigo-600');
+  z.classList.remove('border-transparent');
+  a.classList.remove('border-indigo-600','text-indigo-600');
+  x.style.display = "block";
+  y.style.display = "none"
 }

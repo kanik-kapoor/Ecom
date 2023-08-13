@@ -58,14 +58,14 @@
           <div class="border-b border-gray-200">
             <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
               <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
-              <button id="tabs-1-tab-1" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-1" role="tab" type="button">Women</button>
+              <button id="tabs-1-tab-1" class="text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium border-indigo-600 text-indigo-600 border-b-2" aria-controls="tabs-1-panel-1" role="tab" type="button" onclick="mobWomenFlyout()">Women</button>
               <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
-              <button id="tabs-1-tab-2" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium" aria-controls="tabs-1-panel-2" role="tab" type="button">Men</button>
+              <button id="tabs-1-tab-2" class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium border-b-2" aria-controls="tabs-1-panel-2" role="tab" type="button" onclick="mobMenFlyout()">Men</button>
             </div>
           </div>
 
           <!-- 'Women' tab panel, show/hide based on tab state. -->
-          <div id="tabs-1-panel-1" class="space-y-10 px-4 pb-8 pt-10" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
+          <div id="tabs-1-panel-1" class="space-y-10 px-4 pb-8 pt-10" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0" style="display: block;">
             <div class="grid grid-cols-2 gap-x-4">
               <div class="group relative text-sm">
                 <div class="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
@@ -165,7 +165,7 @@
             </div>
           </div>
           <!-- 'Men' tab panel, show/hide based on tab state. -->
-          <div id="tabs-1-panel-2" class="space-y-10 px-4 pb-8 pt-10" aria-labelledby="tabs-1-tab-2" role="tabpanel" tabindex="0">
+          <div id="tabs-1-panel-2" class="space-y-10 px-4 pb-8 pt-10" aria-labelledby="tabs-1-tab-2" role="tabpanel" tabindex="0" style="display: none;">
             <div class="grid grid-cols-2 gap-x-4">
               <div class="group relative text-sm">
                 <div class="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
@@ -303,7 +303,7 @@
 
           <!-- Logo -->
           <div class="ml-4 flex lg:ml-0">
-            <a href="#">
+            <a href="/products">
               <span class="sr-only">Your Company</span>
               <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
             </a>
@@ -315,7 +315,7 @@
               <div class="flex">
                 <div class="relative flex">
                   <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                  <button type="button" class="border-transparent text-gray-700 hover:text-gray-800 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false" onclick="womenFlyout()">Women</button>
+                  <button type="button" id="womenFlyoutTab" class="border-transparent text-gray-700 hover:text-gray-800 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="false" onclick="womenFlyout()">Women</button>
                 </div>
 
                 <!--
@@ -442,7 +442,7 @@
               <div class="flex">
                 <div class="relative flex">
                   <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                  <button type="button" class="border-transparent text-gray-700 hover:text-gray-800 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="true" onclick="menFlyout()">Men</button>
+                  <button type="button" id="menFlyoutTab" class="border-transparent text-gray-700 hover:text-gray-800 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out" aria-expanded="true" onclick="menFlyout()">Men</button>
                 </div>
 
                 <!--

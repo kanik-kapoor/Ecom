@@ -32,7 +32,6 @@ router.route("/admin/user/:id").get(isAuthenticatedUser,authorizeRoles("admin"),
 router.route("/admin/user/:id").put(isAuthenticatedUser,authorizeRoles("admin"),updateUserbyAdmin)
 router.route("/admin/user/:id").delete(isAuthenticatedUser,authorizeRoles("admin"),deleteUserByAdmin)
 
-
 router.get('/login',(req,res) =>{
     login(req,res)
 })

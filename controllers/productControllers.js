@@ -46,7 +46,7 @@ const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   //   products: product,
   //   productCount: productCount,
   // });
-
+  // cartDetails();
   //  console.log(product);
   res.render('home',{product,productCount})
 });
@@ -234,6 +234,12 @@ const addToCart = catchAsyncErrorHandler( async (req, res) => {
 }
 
 )
+
+// async function cartDetails(){
+//  const respons = await fetch('/me');
+// console.log('respons')
+// console.log(respons)
+// }
 
 module.exports = {
   getAllProducts,

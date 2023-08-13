@@ -25,7 +25,7 @@
       -->
       <div class="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
         <div class="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-          <button type="button" class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8 z-10" onclick="closeButton()">
+          <button type="button" class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8 z-10" onclick="closeButton('dialog')">
             <span class="sr-only">Close</span>
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -52,7 +52,7 @@
                 <input type="hidden" id="_id">
                 <div class="flex items-center justify-center gap-x-6">
                 <button type="submit" onclick="deleteProduct()" class="mt-6 flex w-4/5 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Delete</button>
-                <button type="button" class="mt-6 flex w-4/5 items-center justify-center rounded-md border border-transparent bg-gray-200 font-semibold px-8 py-3 text-base font-medium leading-6 text-gray-900 hover:bg-gray-300" onclick="closeButton()">Cancel</button>
+                <button type="button" class="mt-6 flex w-4/5 items-center justify-center rounded-md border border-transparent bg-gray-200 font-semibold px-8 py-3 text-base font-medium leading-6 text-gray-900 hover:bg-gray-300" onclick="closeButton('dialog')">Cancel</button>
                 </div>
               </section>
             </div>

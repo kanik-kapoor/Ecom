@@ -19,6 +19,7 @@ const createUser = catchAsyncError(async (req, res, next) => {
     },
   });
   // res.redirect('/products')
+
   sendToken(user, 201, res);
 });
 
@@ -64,10 +65,7 @@ const logoutUser = catchAsyncError(async (req, res, next) => {
     httpOnly: true,
   });
 
-  res.status(200).json({
-    success: true,
-    message: "Logged Out",
-  });
+  res.redirect('/login')
 });
 
 //forget password (token genration)
@@ -250,18 +248,9 @@ const deleteUserByAdmin =  catchAsyncError (async(req ,res, next)=>{
       })
 })
 
-const cartDetails = catchAsyncError (
-  async(req, res, next) =>{
 
-    try {
-      const user = await User.findById(req.user.id);
-      console.log(user)
-  
-    } catch (error) {
-       console.log(error.message)
-    }
-  }
-)
+
+
 
 module.exports = {
   createUser,
@@ -279,5 +268,5 @@ module.exports = {
   getSingleUserDetail,
   updateUserbyAdmin,
   deleteUserByAdmin,
-  cartDetails
+
 };
