@@ -199,9 +199,9 @@ function mobWomenFlyout(){
   var y = document.getElementById("tabs-1-panel-2");
   var z = document.getElementById("tabs-1-tab-1");
   var a = document.getElementById("tabs-1-tab-2");
-  z.classList.add('border-indigo-600','text-indigo-600');
+  z.classList.add('border-indigo-600','text-indigo-600', 'border-b-2');
   z.classList.remove('border-transparent');
-  a.classList.remove('border-indigo-600','text-indigo-600');
+  a.classList.remove('border-indigo-600','text-indigo-600', 'border-b-2');
   x.style.display = "block";
   y.style.display = "none"
 }
@@ -211,9 +211,9 @@ function mobMenFlyout(){
   var x = document.getElementById("tabs-1-panel-2");
   var a = document.getElementById("tabs-1-tab-1");
   var z = document.getElementById("tabs-1-tab-2");
-  z.classList.add('border-indigo-600','text-indigo-600');
+  z.classList.add('border-indigo-600','text-indigo-600', 'border-b-2');
   z.classList.remove('border-transparent');
-  a.classList.remove('border-indigo-600','text-indigo-600');
+  a.classList.remove('border-indigo-600','text-indigo-600', 'border-b-2');
   x.style.display = "block";
   y.style.display = "none"
 }
