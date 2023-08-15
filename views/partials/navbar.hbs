@@ -302,10 +302,10 @@
           </button>
 
           <!-- Logo -->
-          <div class="ml-4 flex lg:ml-0">
+          <div class="ml-4 mr-6 flex lg:ml-0">
             <a href="/products">
               <span class="sr-only">Your Company</span>
-              <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
+              <h1 class="text-2xl font-bold tracking-tight text-indigo-700 sm:text-3xl">KAY</h1>
             </a>
           </div>
 
@@ -563,7 +563,20 @@
             </div>
           </div>
 
+
+
           <div class="ml-auto flex items-center">
+            <!-- Search -->
+            {{!-- <form action="/search" method="post">
+              <div class="hidden flex lg:mx-6" id="search">
+                <div style="position: absolute;top: 20%;left: 22rem;z-index: 10;width: 76rem;">
+                  <input type="text" name="search" class="h-10 w-full pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none" placeholder="Search anything...">
+                  <div class="absolute top-4 right-3">
+                    <i class="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
+                  </div>  
+                </div>
+              </div>
+            </form> --}}
             <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
               <a href="/login" class="text-sm font-medium text-gray-700 hover:text-gray-800">Sign in</a>
               <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
@@ -577,15 +590,13 @@
                 <span class="sr-only">, change currency</span>
               </a>
             </div> --}}
-
             <!-- Search -->
             <div class="flex lg:ml-6">
-              <a href="#" class="p-2 text-gray-400 hover:text-gray-500">
+              <button class="p-2 text-gray-400 hover:text-gray-500" onclick="search()">
                 <span class="sr-only">Search</span>
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
-              </a>
             </div>
 
             <!-- Cart -->

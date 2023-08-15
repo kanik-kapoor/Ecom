@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -88,15 +88,10 @@ p {
 }
 .product_details ul li::before {
   content: "\2022";
-  /* Add content: \2022 is the CSS Code/unicode for a bullet */
   color: #cccccc;
-  /* Change the color */
   display: inline-block;
-  /* Needed to add space between the bullet and the text */
   width: 1em;
-  /* Also needed for space (tweak if needed) */
   margin-left: -1em;
-  /* Also needed for space (tweak if needed) */
 }
 .cta {
   display: flex;
@@ -189,4 +184,4 @@ svg {
 	height: 18px;
 	width: 102px;
   margin: 4% 0 4% 0;
-}
+} */

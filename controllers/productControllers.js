@@ -23,6 +23,19 @@ const searchProduct = async (req,res) =>{
   res.render('filter')
 }
 
+const search = async (req,res) =>{
+  const productCount = await Product.countDocuments();
+  const apiFeatures = new ApiFeatures(Product.find().lean(), 'jacket')
+    .search()
+    .filter()
+  const product = await apiFeatures.query;
+  res.status(200).json({
+    success: true,
+    message: "Review added successfully",
+    product: product,
+  });
+}
+
 const deleteProduct = async (req,res) =>{
   const productCount = await Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find().lean(), req.query)
@@ -253,6 +266,7 @@ module.exports = {
   getAllreviewsSingleProduct,
   deleteReviews,
   searchProduct,
+  search,
   addToCart,
   // cartDetails
 };

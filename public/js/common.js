@@ -217,3 +217,9 @@ function mobMenFlyout(){
   x.style.display = "block";
   y.style.display = "none"
 }
+
+function search(){
+  var x = document.getElementById("search")
+  x.classList.remove('hidden')
+  x.style.display = "block";
+}
