@@ -218,8 +218,8 @@ function mobMenFlyout(){
   y.style.display = "none"
 }
 
-function search(){
-  var x = document.getElementById("search")
+function openPopup(id){
+  var x = document.getElementById(id)
   x.classList.remove('hidden')
   x.style.display = "block";
 }

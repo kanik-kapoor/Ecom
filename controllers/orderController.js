@@ -67,12 +67,14 @@ const getAllOrders = catchAsyncErrorHandler(async (req, res, next)=>{
   orders.forEach(order=>{
     totalAmount+=order.paymentInfo.totalPrice
   })
-    res.status(200).json({
-            success:true,
-            message:"Orders fetched successfully",
-            totalAmount,
-            orders
-        })
+    // res.status(200).json({
+    //         success:true,
+    //         message:"Orders fetched successfully",
+    //         totalAmount,
+    //         orders
+    //     })
+    // console.log(orders);
+    res.render('orders',{orders})
 })
 
 //update order status --Admin
