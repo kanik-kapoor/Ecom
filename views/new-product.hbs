@@ -13,12 +13,21 @@
       <form action="/admin/products/new" method="post">
         <div class="space-y-12">
             <div class="mt-1 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div class="sm:col-span-4">
+              <div class="sm:col-span-3">
                 <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Title</label>
                 <div class="mt-2">
                   <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     {{!-- <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span> --}}
                     <input type="text" name="name" id="name" class="block flex-1 border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="Short sleeve t-shirt">
+                  </div>
+                </div>
+              </div>
+              <div class="sm:col-span-3">
+                <label for="company_name" class="block text-sm font-medium leading-6 text-gray-900">Company name</label>
+                <div class="mt-2">
+                  <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                    {{!-- <span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span> --}}
+                    <input type="text" name="company_name" id="company_name" class="block flex-1 border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="ZARA">
                   </div>
                 </div>
               </div>

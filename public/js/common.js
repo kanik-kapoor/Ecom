@@ -222,4 +222,26 @@ function openPopup(id){
   var x = document.getElementById(id)
   x.classList.remove('hidden')
   x.style.display = "block";
+  document.getElementById('default-search').focus();
+}
+
+async function search(id) {
+  var input = document.getElementById(id)
+  const url = '/search?keyword=' + input.value
+  location.replace(url)
+}
+
+function searchKeyPress(e){
+    e = e || window.event;
+    if (e.keyCode == 13)
+    {
+      var input = document.getElementById('default-search')
+      const url = '/search?keyword=' + input.value
+      location.replace(url)
+    }
+    return true;
+}
+
+function filter(id){
+
 }

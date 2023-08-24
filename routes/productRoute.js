@@ -24,9 +24,9 @@ router.get('/search',(req,res) =>{
     searchProduct(req,res)
 })
 
-router.post('/search',(req,res) =>{
-    search(req,res)
-})
+// router.post('/search',(req,res) =>{
+//     search(req,res)
+// })
 
 
 

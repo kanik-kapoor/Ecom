@@ -1,52 +1,43 @@
-<div class="hidden relative z-10 dialog transition ease-in-out delay-150" role="dialog" aria-modal="true" id="search">
-  <!--
-    Background backdrop, show/hide based on modal state.
-
-    Entering: "ease-out duration-300"
-      From: "opacity-0"
-      To: "opacity-100"
-    Leaving: "ease-in duration-200"
-      From: "opacity-100"
-      To: "opacity-0"
-  -->
-  <div class="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block"></div>
-
-  <div class="fixed inset-0 z-10 overflow-y-auto">
-    <div class="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
-      <!--
-        Modal panel, show/hide based on modal state.
-
-        Entering: "ease-out duration-300"
-          From: "opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
-          To: "opacity-100 translate-y-0 md:scale-100"
-        Leaving: "ease-in duration-200"
-          From: "opacity-100 translate-y-0 md:scale-100"
-          To: "opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
-      -->
-      <div class="flex w-full fixed top-0 transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
-        <div class="relative flex w-full items-center overflow-hidden px-4 pb-8 pt-14 sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-            <main class="w-full">
-                <form action="/search" method="post">   
-                    <label for="default-search" class="mb-2 mt-5 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                            </svg>
-                        </div>
-                        <input type="search" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required>
-                        <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-                    </div>
-                </form>
-            </main>
-            <button type="button" class="bg-white ml-2 text-lg text-black font-semibold p-3.5 rounded-lg" onclick="closeButton('search')" style="position: initial;">
-              <span class="sr-only">Close</span>
-              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+<header class="absolute w-full top-0 z-10 bg-white hidden lg:z-1" id="search" style="background: none;">
+  <nav aria-label="Top" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:w-2/5" style="    display: flex;
+    justify-content: right;
+">
+    <div class="border-b border-gray-200" style="width: 68%;">
+      <div class="flex h-16 items-center">
+        <div class="w-full">
+          <label for="default-search"
+            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 hidden lg:block md:block" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+              </svg>
+            </div>
+            <input type="search" id="default-search"
+              class="block w-full p-4 lg:pl-10 md:pl-10 text-sm text-gray-900 border-0 border-b-1 rounded-lg bg-gray-100"
+              style="box-shadow: none;" placeholder="Search Mockups, Logos..."
+              onkeypress="return searchKeyPress(event);" required>
+            <button type="button" id="press"
+              class="text-white absolute right-16 bottom-2.5 bg-indigo-600 hover:bg-indigo-700 font-medium rounded-lg text-sm px-4 py-2"
+              onclick="search('default-search')">
+              <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
               </svg>
             </button>
+            <button type="button"
+              class="text-white text-sm h-8 w-12 absolute right-2.5 bottom-2.5 bg-indigo-600 hover:bg-indigo-700 font-medium rounded-lg text-sm p-0 font-mono"
+              onclick="closeButton('search')">
+              <svg class="h-6 w-12" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>  
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </nav>
+</header>

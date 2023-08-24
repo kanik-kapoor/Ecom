@@ -20,12 +20,17 @@ const newProduct = async (req,res) =>{
 }
 
 const searchProduct = async (req,res) =>{
-  res.render('filter')
+  const productCount = await Product.countDocuments();
+  const apiFeatures = new ApiFeatures(Product.find().lean(), req.query)
+    .search()
+    .filter()
+  const product = await apiFeatures.query;
+  res.render('filter',{product})
 }
 
 const search = async (req,res) =>{
   const productCount = await Product.countDocuments();
-  const apiFeatures = new ApiFeatures(Product.find().lean(), 'jacket')
+  const apiFeatures = new ApiFeatures(Product.find().lean(), req.query)
     .search()
     .filter()
   const product = await apiFeatures.query;
