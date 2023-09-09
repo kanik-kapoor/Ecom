@@ -18,18 +18,12 @@ const sendToken= (user,statusCode, res ) =>{
     options.secure = true;
   }
   if (user.role === 'admin') {
-    res.status(statusCode).cookie('token', token, options).json({
-      success: true,
-      user,
-      token,
-    })
+    res.cookie('token', token, options)
+    res.redirect('/admin/products/new')
   }
   else if (user.role === 'user')  {
-    res.status(statusCode).cookie('token', token, options).json({
-      success: true,
-      user,
-      token,
-    })
+    res.cookie('token', token, options)
+    res.redirect('/products')
   }
   else{
     return res.status(500).json({

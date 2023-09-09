@@ -1,4 +1,4 @@
-<div class="relative z-10" style="display: none;" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" id="cart">
+<div class="hidden relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" id="cart">
   <!--
     Background backdrop, show/hide based on slide-over state.
 
@@ -39,6 +39,14 @@
                   </button>
                 </div>
               </div>
+
+<!-- views/partials/cart.hbs -->
+<ul>
+  {{#each cartDetail}}
+    <li>{{this.productName}} - {{this.price}}</li>
+  {{/each}}
+</ul>
+
 
               <div class="mt-8">
                 <div class="flow-root">
@@ -112,6 +120,7 @@
                   or
                   <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500" onclick="closeButton('cart')">
                     Continue Shopping
+                  
                     <span aria-hidden="true"> &rarr;</span>
                   </button>
                 </p>

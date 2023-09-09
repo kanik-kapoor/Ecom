@@ -18,7 +18,7 @@
 
     Off-canvas menu for mobile, show/hide based on off-canvas menu state.
   -->
-  <div class="relative z-40 lg:hidden" role="dialog" aria-modal="true" id="headPannel" style="display: none;">
+  <div class="hidden relative z-40 lg:hidden" role="dialog" aria-modal="true" id="headPannel">
     <!--
       Off-canvas menu backdrop, show/hide based on off-canvas menu state.
 
@@ -265,7 +265,8 @@
             <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Stores</a>
           </div>
         </div>
-
+        {{#if token}}
+        {{else}}
         <div class="space-y-6 border-t border-gray-200 px-4 py-6">
           <div class="flow-root">
             <a href="/login" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
@@ -274,7 +275,7 @@
             <a href="/register" class="-m-2 block p-2 font-medium text-gray-900">Create account</a>
           </div>
         </div>
-
+        {{/if}}
         <div class="border-t border-gray-200 px-4 py-6">
           <a href="#" class="-m-2 flex items-center p-2">
             {{!-- <img src="https://tailwindui.com/img/flags/flag-canada.svg" alt="" class="block h-auto w-5 flex-shrink-0">
@@ -576,7 +577,7 @@
             </form> --}}
             <!-- Search -->
             <div class="flex lg:ml-6">
-              <button class="p-2 text-gray-400 hover:text-gray-500" onclick="openPopup('search')">
+              <button class="p-2 text-gray-400 hover:text-gray-500" onclick="closeButton('search')">
                 <span class="sr-only">Search</span>
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -584,8 +585,8 @@
             </div>
 
             <!-- Cart -->
-            <div class="ml-2 md:mx-4 flow-root lg:mx-6">
-              <a href="#" class="group -m-2 flex items-center p-2" onclick="closeButton('cart')">
+            <div class="mx-4 flow-root lg:mx-6">
+              <a href="#" class="group -m-2 flex items-center p-2" onclick="cart('cart')">
                 <svg class="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                 </svg>
@@ -593,11 +594,37 @@
                 <span class="sr-only">items in cart, view bag</span>
               </a>
             </div>
+            <div class="relative cursor-pointer inline-flex items-center justify-center w-8 h-8 overflow-hidden bg-gray-100 rounded-full ">
+                <span class="font-medium text-sm text-gray-600">KK</span>
+            </div>
+<div id="userDropdown" class="absolute top-14 lg:right-80 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+      <div>Bonnie Green</div>
+      <div class="font-medium truncate">name@flowbite.com</div>
+    </div>
+    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+      </li>
+    </ul>
+    <div class="py-1">
+      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+    </div>
+</div>
+            {{#if token}}
+            {{else}}
             <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
               <a href="/login" class="text-sm font-medium text-gray-700 hover:text-gray-800">Sign in</a>
               <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
               <a href="/register" class="text-sm font-medium text-gray-700 hover:text-gray-800">Create account</a>
             </div>
+            {{/if}}
             {{!-- <div class="hidden lg:ml-8 lg:flex">
               <a href="#" class="flex items-center text-gray-700 hover:text-gray-800">
                 <img src="https://tailwindui.com/img/flags/flag-canada.svg" alt="" class="block h-auto w-5 flex-shrink-0">

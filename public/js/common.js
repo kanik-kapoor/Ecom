@@ -1,7 +1,10 @@
+
+
+
 function productPopup(product){
   const {name, price,description, reviews, _id} = product 
   var x = document.getElementById("dialog");
-  x.style.display = "block";
+  x.classList.toggle('hidden')
   const productName= document.getElementById("dialog_name")
   productName.innerHTML = name
   const productPrice= document.getElementById("price")
@@ -27,7 +30,7 @@ function productPopups(product){
   id =  _id
   console.log(compare_price,type,name, price,description, reviews, _id);
   var x = document.getElementById("dialogs");
-  x.style.display = "block";
+  x.classList.toggle('hidden')
 
   const titles= document.getElementById("names")
   titles.value = name
@@ -59,12 +62,8 @@ function productPopups(product){
 
 function closeButton(id) {
   var x = document.getElementById(id);
-  console.log(id);
-  if (x.style.display == "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none"
-  }
+  x.classList.toggle('hidden')
+  document.getElementById('default-search').focus();
 }
 
 async function deleteProduct() {
@@ -147,6 +146,21 @@ function adminPannel() {
     x.style.display = "block";
   } else {
     x.style.display = "none"
+  }
+}
+
+function toggle(id,id1,id2) {
+  var x = document.getElementById(id);
+  var y = document.getElementById(id1);
+  var z = document.getElementById(id2);
+  if (x.classList.contains("hidden")) {
+    x.classList.remove('hidden');
+    z.classList.remove('hidden');
+    y.classList.add('hidden');
+  } else {
+    x.classList.add('hidden');
+    y.classList.remove('hidden');
+    z.classList.add('hidden');
   }
 }
 
@@ -243,5 +257,23 @@ function searchKeyPress(e){
 }
 
 function filter(id){
+
+}
+
+function popup(id){
+  var x = document.getElementById(id)
+  x.classList.toggle('hidden')
+}
+
+async function cart(id){
+  var x = document.getElementById(id);
+  x.classList.toggle('hidden');
+  const url = `/cart-detail`
+  const response  =   await fetch(url,{
+    method:"GET",
+   })
+  const datas = response.json()
+  
+  datas.then((data)=>{console.log(data.data)}).catch((error)=>{console.log(error.message)})
 
 }

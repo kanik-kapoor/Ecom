@@ -3,7 +3,8 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrorHandler = require("../middleware/catchAsyncError.js");
 const ApiFeatures = require("../utils/apiFeatures.js");
 const User = require("../models/userModel.js");
-const { getUserDetail } = require("./userController");
+
+
 //create product --Admin
 const createProduct = catchAsyncErrorHandler(async (req, res, next) => {
   req.body.user = req.user.id;
@@ -53,6 +54,7 @@ const deleteProduct = async (req,res) =>{
 //get all products
 const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   // const resultPerpage = 5;
+  const token = req.cookies;
   const productCount = await Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find().lean(), req.query)
     .search()
@@ -65,8 +67,7 @@ const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   //   productCount: productCount,
   // });
   // cartDetails();
-  //  console.log(product);
-  res.render('home',{product,productCount})
+  res.render('home',{product,productCount,token})
 });
 
 //update product --Admin
@@ -259,6 +260,29 @@ const addToCart = catchAsyncErrorHandler( async (req, res) => {
 // console.log(respons)
 // }
 
+
+const cartDetails = catchAsyncErrorHandler(async (req, res) => {
+  const userId = req.user._id;
+  console.log("my user id");
+
+  const user = await User.findById(userId);
+  
+  // Use Promise.all to wait for all promises to resolve
+  const cartDetail = await Promise.all(user.cart.map(async (data) => {
+    console.log(data.product);
+    const details = await Product.findById(data.product);
+    return details;
+  }));
+console.log(cartDetail)
+return res.status(200).json({ 
+  success:true,
+  data:cartDetail,
+  message: 'Product added to cart successfully.' 
+});
+
+})
+
+
 module.exports = {
   getAllProducts,
   createProduct,
@@ -273,5 +297,5 @@ module.exports = {
   searchProduct,
   search,
   addToCart,
-  // cartDetails
+  cartDetails
 };
