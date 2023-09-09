@@ -594,29 +594,29 @@
                 <span class="sr-only">items in cart, view bag</span>
               </a>
             </div>
-            <div class="relative cursor-pointer inline-flex items-center justify-center w-8 h-8 overflow-hidden bg-gray-100 rounded-full ">
+            <div class="relative cursor-pointer inline-flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full" onclick="closeButton('userDropdown')">
                 <span class="font-medium text-sm text-gray-600">KK</span>
+                <div id="userDropdown" class="hidden absolute top-10 right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                  <div class="px-4 py-3 text-sm text-gray-900">
+                    <div>Kanik Kapoor</div>
+                    <div class="font-medium truncate">kanikapoor@gmail.com</div>
+                  </div>
+                  <ul class="py-2 text-sm text-gray-700" aria-labelledby="avatarButton">
+                    <li>
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100">Orders</a>
+                    </li>
+                    <li>
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
+                    </li>
+                    <li>
+                      <a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a>
+                    </li>
+                  </ul>
+                  <div class="py-1">
+                    <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+                  </div>
+              </div>
             </div>
-<div id="userDropdown" class="absolute top-14 lg:right-80 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-      <div>Bonnie Green</div>
-      <div class="font-medium truncate">name@flowbite.com</div>
-    </div>
-    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-      </li>
-    </ul>
-    <div class="py-1">
-      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-    </div>
-</div>
             {{#if token}}
             {{else}}
             <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
