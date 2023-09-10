@@ -54,7 +54,7 @@ const deleteProduct = async (req,res) =>{
 //get all products
 const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   // const resultPerpage = 5;
-  const token = req.cookies;
+  var token = JSON.parse(JSON.stringify(req.cookies));
   const productCount = await Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find().lean(), req.query)
     .search()
@@ -67,6 +67,13 @@ const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   //   productCount: productCount,
   // });
   // cartDetails();
+  if (Object.keys(token).length === 0) {
+    token = false
+  }
+  else{
+    token = true
+  }
+  // console.log(token);
   res.render('home',{product,productCount,token})
 });
 

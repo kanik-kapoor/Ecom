@@ -63,6 +63,12 @@ function productPopups(product){
 function closeButton(id) {
   var x = document.getElementById(id);
   x.classList.toggle('hidden')
+}
+
+function searchToggle(id) {
+  var x = document.getElementById(id);
+  x.classList.toggle('hidden')
+  document.getElementById('userDropdown').classList.add('hidden');
   document.getElementById('default-search').focus();
 }
 
