@@ -265,7 +265,8 @@
             <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Stores</a>
           </div>
         </div>
-        {{#xIf token '==' true}}
+        {{!-- {{#xIf token '==' true}} --}}
+        {{#if user}}
         {{else}}
         <div class="space-y-6 border-t border-gray-200 px-4 py-6">
           <div class="flow-root">
@@ -275,7 +276,8 @@
             <a href="/register" class="-m-2 block p-2 font-medium text-gray-900">Create account</a>
           </div>
         </div>
-        {{/xIf}}
+        {{/if}}
+        {{!-- {{/xIf}} --}}
         <div class="border-t border-gray-200 px-4 py-6">
           <a href="#" class="-m-2 flex items-center p-2">
             {{!-- <img src="https://tailwindui.com/img/flags/flag-canada.svg" alt="" class="block h-auto w-5 flex-shrink-0">
@@ -594,13 +596,14 @@
                 <span class="sr-only">items in cart, view bag</span>
               </a>
             </div>
-            {{#xIf token '==' true}}
+            {{!-- {{#xIf token '==' true}} --}}
+            {{#if user}}
             <div class="relative cursor-pointer inline-flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full" onclick="closeButton('userDropdown')">
                 <span class="font-medium text-sm text-gray-600">KK</span>
                 <div id="userDropdown" class="hidden absolute top-10 right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                   <div class="px-4 py-3 text-sm text-gray-900">
-                    <div>Kanik Kapoor</div>
-                    <div class="font-medium truncate">kanikapoor@gmail.com</div>
+                    <div>{{user.name}}</div>
+                    <div class="font-medium truncate">{{user.email}}</div>
                   </div>
                   <ul class="py-2 text-sm text-gray-700" aria-labelledby="avatarButton">
                     <li>
@@ -624,7 +627,8 @@
               <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
               <a href="/register" class="text-sm font-medium text-gray-700 hover:text-gray-800">Create account</a>
             </div>
-            {{/xIf}}
+            {{/if}}
+            {{!-- {{/xIf}} --}}
             {{!-- <div class="hidden lg:ml-8 lg:flex">
               <a href="#" class="flex items-center text-gray-700 hover:text-gray-800">
                 <img src="https://tailwindui.com/img/flags/flag-canada.svg" alt="" class="block h-auto w-5 flex-shrink-0">

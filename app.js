@@ -9,6 +9,7 @@ const user = require('./routes/userRoutes.js')
 const product = require('./routes/productRoute.js');
 const order = require('./routes/orderRoutes.js')
 const Handlebars = require('handlebars');
+const session = require('express-session')
 app.use(express.json());    
 app.use(express.urlencoded({extended: true})); 
 app.use(cookieParser())
@@ -49,7 +50,12 @@ app.engine('.hbs', expressHbs.engine({ extname: '.hbs', defaultLayout: "main",ha
 // Handlebars.registerHelper('json', function(context) {
 //     return JSON.stringify(context);
 //   }); 
-
+app.use(session({
+    key:'user_sid',
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+  }))
 app.use("/", product);
 app.use("/", user);
 app.use("/", order);

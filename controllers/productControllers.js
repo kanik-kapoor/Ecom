@@ -3,7 +3,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrorHandler = require("../middleware/catchAsyncError.js");
 const ApiFeatures = require("../utils/apiFeatures.js");
 const User = require("../models/userModel.js");
-
+const axios = require('axios');
 
 //create product --Admin
 const createProduct = catchAsyncErrorHandler(async (req, res, next) => {
@@ -54,27 +54,32 @@ const deleteProduct = async (req,res) =>{
 //get all products
 const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   // const resultPerpage = 5;
-  var token = JSON.parse(JSON.stringify(req.cookies));
+  // var token = JSON.parse(JSON.stringify(req.cookies));
+  const user = req.session.user
   const productCount = await Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find().lean(), req.query)
     .search()
     .filter()
     // .pagination(resultPerpage);
   const product = await apiFeatures.query;
+  axios.get('http://localhost:4000/cart-detail')
+  // Show response data
+  .then(res => console.log(res.data))
+  .catch(err => console.log(err))
   // res.status(200).json({
   //   success: true,
   //   products: product,
   //   productCount: productCount,
   // });
   // cartDetails();
-  if (Object.keys(token).length === 0) {
-    token = false
-  }
-  else{
-    token = true
-  }
-  // console.log(token);
-  res.render('home',{product,productCount,token})
+  // if (Object.keys(token).length === 0) {
+  //   token = false
+  // }
+  // else{
+  //   token = true
+  // }
+  // console.log(req);
+  res.render('home',{product, productCount, user})
 });
 
 //update product --Admin

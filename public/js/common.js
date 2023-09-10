@@ -274,12 +274,12 @@ function popup(id){
 async function cart(id){
   var x = document.getElementById(id);
   x.classList.toggle('hidden');
-  const url = `/cart-detail`
-  const response  =   await fetch(url,{
-    method:"GET",
-   })
-  const datas = response.json()
+  // const url = `/cart-detail`
+  // const response  =   await fetch(url,{
+  //   method:"GET",
+  //  })
+  // const datas = response.json()
   
-  datas.then((data)=>{console.log(data.data)}).catch((error)=>{console.log(error.message)})
+  // datas.then((data)=>{console.log(data.data)}).catch((error)=>{console.log(error.message)})
 
 }

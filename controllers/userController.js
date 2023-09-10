@@ -47,8 +47,17 @@ const loginUser = catchAsyncError(async (req, res, next) => {
   if (!isPasswordMatched) {
     return next(new ErrorHandler("Invalid email or password", 401));
   }
+
   // res.redirect('/products')
     // res.redirect('/products')
+    // user.save()
+    // .then(user => {
+    //   req.session.user = user;
+    // })
+    // .catch(err => {
+    //   console.error(err);
+    // });
+    req.session.user = user
   sendToken(user, 200, res);
 //  console.log(response)
 
@@ -64,7 +73,7 @@ const logoutUser = catchAsyncError(async (req, res, next) => {
     expires: new Date(Date.now()),
     httpOnly: true,
   });
-
+  req.session.destroy() 
   res.redirect('/login')
 });
 
