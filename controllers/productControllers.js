@@ -55,7 +55,6 @@ const deleteProduct = async (req,res) =>{
 const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   // const resultPerpage = 5;
   // var token = JSON.parse(JSON.stringify(req.cookies));
-  try {
   let cart
   const user = req.session.user
   const productCount = await Product.countDocuments();
@@ -65,14 +64,18 @@ const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
     // .pagination(resultPerpage);
   const product = await apiFeatures.query;
   const token = req.headers.cookie
-  const config = {
-    headers: { 'cookie':  token }
-  };
-  const response = await axios.get('http://localhost:4000/cart-detail', config);
-  cart = response.data.data; 
-  const totalCartPrice = cart.reduce((total, product) => {
-    return total + product.price;
-  }, 0);
+  if (user) {
+    const config = {
+      headers: { 'cookie':  token }
+    };
+    const response = await axios.get('http://localhost:4000/cart-detail', config);
+    cart = response.data.data; 
+    const totalCartPrice = cart.reduce((total, product) => {
+      return total + product.price;
+    }, 0);
+  } else {
+    console.log('Not Logged in');
+  }
       // console.log(cart); // You can access cart here, and it should have a value
       // Call any functions or perform actions that depend on cart here
   // res.status(200).json({
@@ -87,11 +90,7 @@ const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   // else{
   //   token = true
   // }
-  res.render('home',{product, productCount, user, cart, totalCartPrice})
-} catch (err) {
-  console.error("Axios request failed:", err);
-  // Handle the error if the Axios request fails
-}
+  res.render('home',{product, productCount, user, cart})
 });
 
 //update product --Admin
@@ -99,7 +98,7 @@ const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
 const updateProducts = catchAsyncErrorHandler(async (req, res, next) => {
   // console.log("body");
   // console.log(req.params.id);
-  console.log("body");
+  // console.log("body");
   // console.log(req.body);
   let product = Product.findById(req.params.id);
   if (!product) {
@@ -287,13 +286,13 @@ const addToCart = catchAsyncErrorHandler( async (req, res) => {
 
 const cartDetails = catchAsyncErrorHandler(async (req, res) => {
   const userId = req.user._id;
-  console.log(req.headers.cookie);
+  // console.log(req.headers.cookie);
 
   const user = await User.findById(userId);
   
   // Use Promise.all to wait for all promises to resolve
   const cartDetail = await Promise.all(user.cart.map(async (data) => {
-    console.log(data.product);
+    // console.log(data.product);
     const details = await Product.findById(data.product);
     return details;
   }));

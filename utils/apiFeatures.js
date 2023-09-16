@@ -15,7 +15,7 @@ class ApiFeatures {
         }
       : {};
 
-    console.log(keyword);
+    // console.log(keyword);
 
     this.query = this.query.find({ ...keyword });
     return this;
@@ -24,7 +24,7 @@ class ApiFeatures {
   //filter the product using price , rating, category
   filter() {
     const queryCopy = { ...this.queryStr };
-    console.log(queryCopy);
+    // console.log(queryCopy);
 
     // removing some fieds for category
     const removeFields = ["keyword", "page", "limit"];
@@ -35,7 +35,7 @@ class ApiFeatures {
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
 
     this.query = this.query.find(JSON.parse(queryStr));
-    console.log(queryCopy);
+    // console.log(queryCopy);
     return this;
   }
 

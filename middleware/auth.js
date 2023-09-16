@@ -11,7 +11,7 @@ const isAuthenticatedUser = catchAsyncError(async (req, res, next)=>{
 const decodedData = jwt.verify(token,process.env.JWT_SECRET);
 
    req.user =  await User.findById(decodedData.id);
-   console.log(' i am authenticated')
+  //  console.log(' i am authenticated')
    next();
 })
 
@@ -20,7 +20,7 @@ const authorizeRoles =  (...roles) => {
        if(!roles.includes(req.user.role)){
        return next ( new ErrorHandler(`Role: ${req.user.role} is not allowed to access this resource`, 403))
       } 
-      console.log("i am authorized")
+      // console.log("i am authorized")
        next();
      }
       }

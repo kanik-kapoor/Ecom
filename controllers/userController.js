@@ -241,7 +241,7 @@ const updateUserbyAdmin= catchAsyncError(async (req, res, next) => {
 
 //delete user by admin
 const deleteUserByAdmin =  catchAsyncError (async(req ,res, next)=>{
-  console.log(req.params)
+  // console.log(req.params)
       const user = await User.findById(req.params.id)
       if(!user){
         next(new ErrorHandler("User does not exist with id "+req.params.id))
