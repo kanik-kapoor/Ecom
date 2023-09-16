@@ -55,6 +55,8 @@ const deleteProduct = async (req,res) =>{
 const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   // const resultPerpage = 5;
   // var token = JSON.parse(JSON.stringify(req.cookies));
+  try {
+  let cart
   const user = req.session.user
   const productCount = await Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find().lean(), req.query)
@@ -62,10 +64,17 @@ const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
     .filter()
     // .pagination(resultPerpage);
   const product = await apiFeatures.query;
-  axios.get('http://localhost:4000/cart-detail')
-  // Show response data
-  .then(res => console.log(res.data))
-  .catch(err => console.log(err))
+  const token = req.headers.cookie
+  const config = {
+    headers: { 'cookie':  token }
+  };
+  const response = await axios.get('http://localhost:4000/cart-detail', config);
+  cart = response.data.data; 
+  const totalCartPrice = cart.reduce((total, product) => {
+    return total + product.price;
+  }, 0);
+      // console.log(cart); // You can access cart here, and it should have a value
+      // Call any functions or perform actions that depend on cart here
   // res.status(200).json({
   //   success: true,
   //   products: product,
@@ -78,8 +87,11 @@ const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   // else{
   //   token = true
   // }
-  // console.log(req);
-  res.render('home',{product, productCount, user})
+  res.render('home',{product, productCount, user, cart, totalCartPrice})
+} catch (err) {
+  console.error("Axios request failed:", err);
+  // Handle the error if the Axios request fails
+}
 });
 
 //update product --Admin
@@ -275,7 +287,7 @@ const addToCart = catchAsyncErrorHandler( async (req, res) => {
 
 const cartDetails = catchAsyncErrorHandler(async (req, res) => {
   const userId = req.user._id;
-  console.log("my user id");
+  console.log(req.headers.cookie);
 
   const user = await User.findById(userId);
   
@@ -285,7 +297,7 @@ const cartDetails = catchAsyncErrorHandler(async (req, res) => {
     const details = await Product.findById(data.product);
     return details;
   }));
-console.log(cartDetail)
+// console.log(cartDetail)
 return res.status(200).json({ 
   success:true,
   data:cartDetail,

@@ -277,5 +277,4 @@ module.exports = {
   getSingleUserDetail,
   updateUserbyAdmin,
   deleteUserByAdmin,
-
 };
