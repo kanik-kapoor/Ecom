@@ -56,7 +56,9 @@ const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   // const resultPerpage = 5;
   // var token = JSON.parse(JSON.stringify(req.cookies));
   let cart
+  let totalCartPrice
   const user = req.session.user
+  var hostname = req.headers.host; // hostname = 'localhost:8080'
   const productCount = await Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find().lean(), req.query)
     .search()
@@ -68,9 +70,9 @@ const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
     const config = {
       headers: { 'cookie':  token }
     };
-    const response = await axios.get('http://localhost:4000/cart-detail', config);
+    const response = await axios.get('http://' + hostname + '/cart-detail', config);
     cart = response.data.data; 
-    const totalCartPrice = cart.reduce((total, product) => {
+    totalCartPrice = cart.reduce((total, product) => {
       return total + product.price;
     }, 0);
   } else {
@@ -90,7 +92,7 @@ const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   // else{
   //   token = true
   // }
-  res.render('home',{product, productCount, user, cart})
+  res.render('home',{product, productCount, user, cart, totalCartPrice})
 });
 
 //update product --Admin

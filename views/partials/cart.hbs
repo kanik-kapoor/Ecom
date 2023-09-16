@@ -39,6 +39,7 @@
                   </button>
                 </div>
               </div>
+              {{#if cart}}
               <div class="mt-8">
                 <div class="flow-root">
                   <ul role="list" class="-my-6 divide-y divide-gray-200">
@@ -70,8 +71,11 @@
                   </ul>
                 </div>
               </div>
+              {{else}}
+              <img class="absolute top-2/4 left-2/4 w-6/12 -translate-x-2/4 -translate-y-2/4 " src="/images/empty_cart.png"/>
+              {{/if}}
             </div>
-
+            {{#if cart}}
             <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
               <div class="flex justify-between text-base font-medium text-gray-900">
                 <p>Subtotal</p>
@@ -92,6 +96,7 @@
                 </p>
               </div>
             </div>
+            {{/if}}
           </div>
         </div>
       </div>
