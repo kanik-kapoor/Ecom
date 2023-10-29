@@ -55,43 +55,16 @@ const deleteProduct = async (req,res) =>{
 const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   // const resultPerpage = 5;
   // var token = JSON.parse(JSON.stringify(req.cookies));
-  let cart
-  let totalCartPrice
   const user = req.session.user
-  var hostname = req.headers.host; // hostname = 'localhost:8080'
+  const cart = req.session.cart
+  const totalCartPrice = req.session.totalCartPrice
   const productCount = await Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find().lean(), req.query)
     .search()
     .filter()
     // .pagination(resultPerpage);
   const product = await apiFeatures.query;
-  const token = req.headers.cookie
-  if (user) {
-    const config = {
-      headers: { 'cookie':  token }
-    };
-    const response = await axios.get('http://' + hostname + '/cart-detail', config);
-    cart = response.data.data; 
-    totalCartPrice = cart.reduce((total, product) => {
-      return total + product.price;
-    }, 0);
-  } else {
-    console.log('Not Logged in');
-  }
-      // console.log(cart); // You can access cart here, and it should have a value
-      // Call any functions or perform actions that depend on cart here
-  // res.status(200).json({
-  //   success: true,
-  //   products: product,
-  //   productCount: productCount,
-  // });
-  // cartDetails();
-  // if (Object.keys(token).length === 0) {
-  //   token = false
-  // }
-  // else{
-  //   token = true
-  // }
+  // console.log(cart);
   res.render('home',{product, productCount, user, cart, totalCartPrice})
 });
 
@@ -139,6 +112,8 @@ const deleteProducts = catchAsyncErrorHandler(async (req, res, next) => {
 // get individual product detail using product id
 
 const productDetail = catchAsyncErrorHandler(async (req, res, next) => {
+  const user = req.session.user
+  const cart = req.session.cart
   let product = await Product.findById(req.params.id);
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
@@ -149,7 +124,7 @@ const productDetail = catchAsyncErrorHandler(async (req, res, next) => {
   //   success: true,
   //   product: product,
   // });
-  res.render('product',{product})
+  res.render('product',{product, cart, user})
 });
 
 //create new review or update the review
@@ -246,7 +221,50 @@ const deleteReviews = catchAsyncErrorHandler(async (req, res, next) => {
   });
 });
 
-const addToCart = catchAsyncErrorHandler( async (req, res) => {
+const addToCart = catchAsyncErrorHandler(async (req, res) => {
+  const userId = req.user._id; // Assuming you have authentication middleware that provides user information
+  const productId = req.params.id;
+  const quantity = req.body.quantity; // Assuming the quantity is sent in the request body
+
+  try {
+    // Use Promise.all to fetch user and product simultaneously
+    const [user, product] = await Promise.all([
+      User.findById(userId),
+      Product.findById(productId),
+    ]);
+
+    if (!user || !product) {
+      return res.status(404).json({ message: 'User or product not found.' });
+    }
+
+    // Check if the product is already in the cart
+    const existingCartItemIndex = user.cart.findIndex(item => item.product.equals(productId));
+
+    if (existingCartItemIndex !== -1) {
+      // If the product is already in the cart, update its quantity
+      user.cart[existingCartItemIndex].quantity += quantity;
+    } else {
+      // If not, add a new item to the cart
+      user.cart.push({ product: productId, quantity: quantity });
+    }
+
+    await user.save();
+
+    // Fetch product details for all items in the cart in parallel
+    const cartProductIds = user.cart.map(item => item.product);
+    const cartDetail = await Product.find({ _id: { $in: cartProductIds } });
+
+    req.session.cart = cartDetail;
+
+    return res.status(200).json({ message: 'Product added to cart successfully.' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error.' });
+  }
+});
+
+
+const removeFromCart = catchAsyncErrorHandler(async (req, res) => {
   const userId = req.user._id; // Assuming you have authentication middleware that provides user information
   const productId = req.params.id;
   const quantity = req.body.quantity; // Assuming the quantity is sent in the request body
@@ -260,30 +278,27 @@ const addToCart = catchAsyncErrorHandler( async (req, res) => {
     }
 
     // Check if the product is already in the cart
-    const existingCartItem = user.cart.find(item => item.product.equals(productId));
+    const existingCartItemIndex = user.cart.findIndex(item => item.product.equals(productId));
 
-    if (existingCartItem) {
-      existingCartItem.quantity += quantity;
-    } else {
-      user.cart.push({ product: productId, quantity: quantity });
+    if (existingCartItemIndex !== -1) {
+      // Remove the product from the cart
+      user.cart.splice(existingCartItemIndex, 1);
+      await user.save();
+
+      const cartDetail = await Promise.all(user.cart.map(async (data) => {
+        const details = await Product.findById(data.product);
+        return details;
+      }));
+
+      req.session.cart = cartDetail;
     }
 
-    await user.save();
-    
-    return res.status(200).json({ message: 'Product added to cart successfully.' });
+    return res.status(200).json({ message: 'Product removed from cart successfully.' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error.' });
   }
-}
-
-)
-
-// async function cartDetails(){
-//  const respons = await fetch('/me');
-// console.log('respons')
-// console.log(respons)
-// }
+});
 
 
 const cartDetails = catchAsyncErrorHandler(async (req, res) => {
@@ -304,7 +319,6 @@ return res.status(200).json({
   data:cartDetail,
   message: 'Product added to cart successfully.' 
 });
-
 })
 
 
@@ -322,5 +336,6 @@ module.exports = {
   searchProduct,
   search,
   addToCart,
-  cartDetails
+  cartDetails,
+  removeFromCart
 };

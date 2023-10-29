@@ -1,10 +1,11 @@
-
+const axios = require('axios');
 
 //creating token and saving in cookie
 
-const sendToken= (user,statusCode, res ) =>{
-  
+const sendToken = async (user,statusCode, res, req ) =>{
+  let cart
   const token = user.getJWTToken();
+  var hostname = req.headers.host;
   //options for cookie
   const options = {
     expiresIn: new Date(
@@ -22,7 +23,22 @@ const sendToken= (user,statusCode, res ) =>{
     res.redirect('/admin/products/new')
   }
   else if (user.role === 'user')  {
-    res.cookie('token', token, options)
+    await res.cookie('token', token, options)
+    try {
+      const config = {
+        headers: { 'cookie': 'token=' + token }
+      };
+      const response = await axios.get('http://' + hostname + '/cart-detail', config);
+      cart = response.data.data; 
+      // console.log(cart);
+    } catch (error) {
+      console.log(error);
+    }
+    totalCartPrice = cart.reduce((total, product) => {
+      return total + product.price;
+    }, 0);
+    req.session.cart = cart
+    req.session.totalCartPrice = totalCartPrice
     res.redirect('/products')
   }
   else{

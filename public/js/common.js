@@ -1,6 +1,3 @@
-
-
-
 function productPopup(product){
   const {name, price,description, reviews, _id} = product 
   var x = document.getElementById("dialog");
@@ -271,15 +268,57 @@ function popup(id){
   x.classList.toggle('hidden')
 }
 
-async function cart(id){
-  var x = document.getElementById(id);
-  x.classList.toggle('hidden');
-  // const url = `/cart-detail`
-  // const response  =   await fetch(url,{
-  //   method:"GET",
-  //  })
-  // const datas = response.json()
-  
-  // datas.then((data)=>{console.log(data.data)}).catch((error)=>{console.log(error.message)})
-
+async function removeFromCart(id){
+  console.log(id);
+  const url = `/remove-from-cart/${id}`
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }; 
+  try {
+    const response = await fetch(url, options)
+    location.reload();
+  } catch (error) {
+    console.log(error);
+  }
 }
+
+async function addToCart(id, id1) {
+  const url = `/add-to-cart/${id}`;
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const addToCartText = document.getElementById('addToCartText');
+  const spinnerPlaceholder = document.getElementById('spinnerPlaceholder');
+
+  // Make the spinner div visible
+  spinnerPlaceholder.classList.remove('hidden');
+
+  // Hide the text by changing its color to transparent
+  addToCartText.style.color = 'transparent';
+
+  try {
+    const response = await fetch(url, options);
+
+    // After the request is complete, you can choose to remove the spinner and change the text color back to visible
+    // Example: spinnerPlaceholder.style.display = 'none'; addToCartText.style.color = 'white';
+    location.reload();
+  } catch (error) {
+    console.log(error);
+
+    // If there's an error, remove the spinner and change the text color back to visible
+    spinnerPlaceholder.classList.add('hidden');
+    addToCartText.style.color = 'white';
+  }
+}
+
+
+
+
+

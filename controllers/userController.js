@@ -58,7 +58,7 @@ const loginUser = catchAsyncError(async (req, res, next) => {
     //   console.error(err);
     // });
     req.session.user = user
-  sendToken(user, 200, res);
+  sendToken(user, 200, res, req);
 //  console.log(response)
 
 });

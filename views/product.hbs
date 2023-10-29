@@ -75,7 +75,7 @@
           </div>
         </div>
 
-        <form class="mt-10" action="/add-to-cart/{{product.id}}" method="post">
+        {{!-- <form class="mt-10" action="/add-to-cart/{{product.id}}" method="post"> --}}
         {{!-- <input type="hidden" name="product" value="{{product.id}}"> --}}
           <!-- Colors -->
           <div>
@@ -208,9 +208,12 @@
               </div>
             </fieldset>
           </div>
-
-          <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add to bag</button>
-        </form>
+          <button type="submit" id="addToCart" onclick="addToCart('{{product.id}}')" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover-bg-indigo-700 focus:outline-none focus-ring-2 focus-ring-indigo-500 focus-ring-offset-2 relative">
+            <span id="addToCartText">Add to bag</span>
+            <div id="spinnerPlaceholder" class="hidden absolute inset-0 flex items-center justify-center">
+              <div class="w-8 h-8 rounded-full animate-spin border-2 border-solid border-white border-t-transparent"></div>
+            </div>
+          </button>
       </div>
 
       <div class="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
