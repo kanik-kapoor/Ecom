@@ -55,9 +55,10 @@ const deleteProduct = async (req,res) =>{
 const getAllProducts = catchAsyncErrorHandler(async (req, res, next) => {
   // const resultPerpage = 5;
   // var token = JSON.parse(JSON.stringify(req.cookies));
-  const user = req.session.user
-  const cart = req.session.cart
-  const totalCartPrice = req.session.totalCartPrice
+  const user = req.session.user || []; 
+  const cart = req.session.cart || []; 
+  const totalCartPrice = cart.reduce((total, product) => total + product.price, 0);
+  
   const productCount = await Product.countDocuments();
   const apiFeatures = new ApiFeatures(Product.find().lean(), req.query)
     .search()
@@ -112,8 +113,10 @@ const deleteProducts = catchAsyncErrorHandler(async (req, res, next) => {
 // get individual product detail using product id
 
 const productDetail = catchAsyncErrorHandler(async (req, res, next) => {
-  const user = req.session.user
-  const cart = req.session.cart
+  const user = req.session.user || []; 
+  const cart = req.session.cart || []; 
+  const totalCartPrice = cart.reduce((total, product) => total + product.price, 0);
+
   let product = await Product.findById(req.params.id);
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
@@ -124,7 +127,7 @@ const productDetail = catchAsyncErrorHandler(async (req, res, next) => {
   //   success: true,
   //   product: product,
   // });
-  res.render('product',{product, cart, user})
+  res.render('product',{product, cart, user, totalCartPrice})
 });
 
 //create new review or update the review
@@ -225,6 +228,7 @@ const addToCart = catchAsyncErrorHandler(async (req, res) => {
   const userId = req.user._id; // Assuming you have authentication middleware that provides user information
   const productId = req.params.id;
   const quantity = req.body.quantity; // Assuming the quantity is sent in the request body
+  // console.log(req.body);
 
   try {
     // Use Promise.all to fetch user and product simultaneously
@@ -252,7 +256,12 @@ const addToCart = catchAsyncErrorHandler(async (req, res) => {
 
     // Fetch product details for all items in the cart in parallel
     const cartProductIds = user.cart.map(item => item.product);
-    const cartDetail = await Product.find({ _id: { $in: cartProductIds } });
+    const cartProductQty = user.cart.map(item => item.quantity);
+    // const cartDetail = await Product.find({ _id: { $in: cartProductIds } });
+    const cartDetail = await Promise.all(user.cart.map(async (data) => {
+      const details = await Product.findById(data.product);
+      return { ...details.toObject(), quantity: data.quantity };
+    }));
 
     req.session.cart = cartDetail;
 
@@ -306,12 +315,13 @@ const cartDetails = catchAsyncErrorHandler(async (req, res) => {
   // console.log(req.headers.cookie);
 
   const user = await User.findById(userId);
-  
+  // user.cart.map((data)=>{
+  //   let data = {}
+  // })
   // Use Promise.all to wait for all promises to resolve
   const cartDetail = await Promise.all(user.cart.map(async (data) => {
-    // console.log(data.product);
     const details = await Product.findById(data.product);
-    return details;
+    return { ...details.toObject(), quantity: data.quantity };
   }));
 // console.log(cartDetail)
 return res.status(200).json({ 

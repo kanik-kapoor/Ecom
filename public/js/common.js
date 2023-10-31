@@ -286,12 +286,17 @@ async function removeFromCart(id){
 }
 
 async function addToCart(id, id1) {
+  const user = document.getElementById('user');
   const url = `/add-to-cart/${id}`;
   const options = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    body: JSON.stringify({
+      product_id: id,
+      quantity: 1
+    })
   };
 
   const addToCartText = document.getElementById('addToCartText');
@@ -302,21 +307,25 @@ async function addToCart(id, id1) {
 
   // Hide the text by changing its color to transparent
   addToCartText.style.color = 'transparent';
+  if (user.value !== '') {
+    try {
+      const response = await fetch(url, options);
 
-  try {
-    const response = await fetch(url, options);
+      // After the request is complete, you can choose to remove the spinner and change the text color back to visible
+      // Example: spinnerPlaceholder.style.display = 'none'; addToCartText.style.color = 'white';
+      location.reload();
+    } catch (error) {
+      console.log(error);
 
-    // After the request is complete, you can choose to remove the spinner and change the text color back to visible
-    // Example: spinnerPlaceholder.style.display = 'none'; addToCartText.style.color = 'white';
-    location.reload();
-  } catch (error) {
-    console.log(error);
-
-    // If there's an error, remove the spinner and change the text color back to visible
-    spinnerPlaceholder.classList.add('hidden');
-    addToCartText.style.color = 'white';
+      // If there's an error, remove the spinner and change the text color back to visible
+      spinnerPlaceholder.classList.add('hidden');
+      addToCartText.style.color = 'white';
+    }
+  } else {
+    window.location.href = "/login";
   }
 }
+
 
 
 
