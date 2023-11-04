@@ -268,24 +268,33 @@ function popup(id){
   x.classList.toggle('hidden')
 }
 
-async function removeFromCart(id){
+async function removeFromCart(id, quantity) {
   console.log(id);
-  const url = `/remove-from-cart/${id}`
+  const url = `/remove-from-cart/${id}`;
   const options = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
-    }
-  }; 
+    },
+    body: JSON.stringify({ quantity: quantity }) // Include the quantity in the request body
+  };
+
   try {
-    const response = await fetch(url, options)
-    location.reload();
+    const response = await fetch(url, options);
+    if (response.ok) {
+      // Reload the page only if the request was successful
+      location.reload();
+    } else {
+      // Handle the case where the request was not successful, e.g., show an error message
+      console.log('Failed to remove the item from the cart.');
+    }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
-async function addToCart(id, id1) {
+
+async function addToCart(id) {
   const user = document.getElementById('user');
   const url = `/add-to-cart/${id}`;
   const options = {
@@ -302,29 +311,45 @@ async function addToCart(id, id1) {
   const addToCartText = document.getElementById('addToCartText');
   const spinnerPlaceholder = document.getElementById('spinnerPlaceholder');
 
-  // Make the spinner div visible
-  spinnerPlaceholder.classList.remove('hidden');
+  if (spinnerPlaceholder) {
+    // Make the spinner div visible
+    spinnerPlaceholder.classList.remove('hidden');
+  }
 
   // Hide the text by changing its color to transparent
-  addToCartText.style.color = 'transparent';
+  if (addToCartText) {
+    addToCartText.style.color = 'transparent';
+  }
+
   if (user.value !== '') {
     try {
       const response = await fetch(url, options);
 
       // After the request is complete, you can choose to remove the spinner and change the text color back to visible
-      // Example: spinnerPlaceholder.style.display = 'none'; addToCartText.style.color = 'white';
+      if (spinnerPlaceholder) {
+        spinnerPlaceholder.style.display = 'none';
+      }
+      if (addToCartText) {
+        addToCartText.style.color = 'white';
+      }
       location.reload();
     } catch (error) {
       console.log(error);
 
       // If there's an error, remove the spinner and change the text color back to visible
-      spinnerPlaceholder.classList.add('hidden');
-      addToCartText.style.color = 'white';
+      if (spinnerPlaceholder) {
+        spinnerPlaceholder.classList.add('hidden');
+      }
+      if (addToCartText) {
+        addToCartText.style.color = 'white';
+      }
     }
   } else {
     window.location.href = "/login";
   }
 }
+
+
 
 
 

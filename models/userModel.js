@@ -41,9 +41,11 @@ const userSchema = new mongoose.Schema({
     // enum: ["user", "admin"],
     default: "user",
   },
+  totalCartPrice: Number,
   cart:[cartItemSchema],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
+  __v: { type: Number, select: false },
 });
 
 userSchema.pre("save", async function (next) {

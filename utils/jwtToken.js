@@ -26,10 +26,12 @@ const sendToken = async (user, statusCode, res, req) => {
 
       // Fetch the user's cart
       const response = await axios.get(`http://${hostname}/cart-detail`, config);
-      const cart = response.data.data;
+      const cart = response.data.cartDetail;
+      const totalCartPrice = response.data.totalCartPrice;
 
       // Update the session variables
       req.session.cart = cart;
+      req.session.totalCartPrice = totalCartPrice;
 
       return res.redirect('/products');
     } else {
