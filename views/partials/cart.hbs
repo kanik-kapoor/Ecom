@@ -1,22 +1,21 @@
 <div class="hidden relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" id="cart">
-  <!--
-    Background backdrop, show/hide based on slide-over state.
-
-    Entering: "ease-in-out duration-500"
-      From: "opacity-0"
-      To: "opacity-100"
-    Leaving: "ease-in-out duration-500"
-      From: "opacity-100"
-      To: "opacity-0"
-  -->
-  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+  <!-- Background backdrop for the slide-over panel -->
+  <div x-show="isOpen" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity">
+    <!--
+      Entering: "ease-in-out duration-500"
+        From: "opacity-0"
+        To: "opacity-100"
+      Leaving: "ease-in-out duration-500"
+        From: "opacity-100"
+        To: "opacity-0"
+    -->
+  </div>
 
   <div class="fixed inset-0 overflow-hidden">
     <div class="absolute inset-0 overflow-hidden">
-      <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+      <!-- Slide-over panel -->
+      <div x-show="isOpen" class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 transform transition ease-in-out duration-500 sm:duration-700">
         <!--
-          Slide-over panel, show/hide based on slide-over state.
-
           Entering: "transform transition ease-in-out duration-500 sm:duration-700"
             From: "translate-x-full"
             To: "translate-x-0"
@@ -25,7 +24,7 @@
             To: "translate-x-full"
         -->
         <div class="pointer-events-auto w-screen max-w-md">
-          <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+          <div class="flex h-full flex-col bg-white shadow-xl">
             <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
               <div class="flex items-start justify-between">
                 <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">Shopping cart</h2>
@@ -54,18 +53,18 @@
                             <h3>
                               <a href="#">{{this.name}}</a>
                             </h3>
-                            <p class="ml-4">{{this.price}}</p>
+                            <p class="ml-4" id="{{this._id}}">{{this.price}}</p>
                           </div>
                           <p class="mt-1 text-sm text-gray-500">ZARA</p>
                         </div>
                         <div class="flex flex-1 items-end justify-between text-sm">
                           <div class="custom-number-input">
                             <div class="flex flex-row">
-                              <button data-action="decrement" class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:bg-gray-200 h-8 w-8 rounded-l cursor-pointer outline-none" onclick="removeFromCart('{{this._id}}', '1')">
+                              <button data-action="decrement" class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:bg-gray-200 h-8 w-8 rounded-l cursor-pointer outline-none" onclick="qtyRemove('{{this._id}}')">
                                 <span class="text-2xl font-thin">−</span>
                               </button>
-                              <input type="number" class="outline-none focus:outline-none text-center w-10 h-8 bg-gray-200 font-semibold text-md cursor-default text-gray-700" name="custom-input-number" value="{{this.quantity}}"></input>
-                              <button data-action="increment" class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:bg-gray-200 h-8 w-8 rounded-r cursor-pointer outline-none" onclick="addToCart('{{this._id}}')">
+                              <input type="number" id="input_{{this._id}}" class="outline-none focus:outline-none text-center w-12 h-8 bg-gray-200 font-semibold text-md cursor-default text-gray-700" name="quantity" value="{{this.quantity}}"></input>
+                              <button data-action="increment" class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:bg-gray-200 h-8 w-8 rounded-r cursor-pointer outline-none" onclick="qtyAdd('{{this._id}}')">
                                 <span class="text-2xl font-thin">+</span>
                               </button>
                             </div>
@@ -88,11 +87,11 @@
             <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
               <div class="flex justify-between text-base font-medium text-gray-900">
                 <p>Subtotal</p>
-                <p>${{totalCartPrice}}</p>
+                <p id="totalCartPrice">₹{{totalCartPrice}}</p>
               </div>
               <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
               <div class="mt-6">
-                <a href="#" class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</a>
+                <button type="submit" class="w-full flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</button>
               </div>
               <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
                 <p>
@@ -106,6 +105,15 @@
               </div>
             </div>
             {{/if}}
+            <!-- Loader overlay -->
+            <div id="cartLoader" class="hidden">
+            <div  class="absolute inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75 transition-opacity z-20 p-0 ml-10">
+              <!-- Add your loader here -->
+              <svg class="cartLoad w-16 origin-center animate-spin" viewBox="25 25 50 50">
+                <circle r="20" cy="50" cx="50"></circle>
+              </svg>
+            </div>
+            </div>
           </div>
         </div>
       </div>

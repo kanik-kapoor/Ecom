@@ -267,9 +267,6 @@ const addToCart = catchAsyncErrorHandler(async (req, res) => {
     const totalCartPrice = cartDetail.reduce((total, product) => total + product.price * product.quantity, 0);
     req.session.totalCartPrice = totalCartPrice; // Save the total cart price in the session
 
-    console.log('Cart after addition: ', req.session.cart);
-    console.log('Total cart price after addition: ', req.session.totalCartPrice);
-
     return res.status(200).json({ message: 'Product added to cart successfully.' });
   } catch (error) {
     console.error(error);

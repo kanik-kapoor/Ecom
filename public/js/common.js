@@ -269,7 +269,7 @@ function popup(id){
 }
 
 async function removeFromCart(id, quantity) {
-  console.log(id);
+  $('#cartLoader').show();
   const url = `/remove-from-cart/${id}`;
   const options = {
     method: 'POST',
@@ -349,10 +349,42 @@ async function addToCart(id) {
   }
 }
 
+function updateTotalCartPrice() {
+  $('#cartLoader').fadeIn().delay(500).fadeOut();
+  const allQuantityInputs = document.querySelectorAll('input[type="number"]');
+  let totalCartPrice = 0;
 
+  allQuantityInputs.forEach((input) => {
+    const productId = input.id.split('_')[1]; // Extract the product ID
+    console.log(productId);
+    const productPrice = parseFloat(document.getElementById(`${productId}`).textContent);
+    const productQuantity = parseInt(input.value);
 
+    totalCartPrice += productPrice * productQuantity;
+  });
 
+  document.getElementById('totalCartPrice').textContent = `₹${totalCartPrice}`;
+}
 
+function qtyAdd(productId) {
+  const input = document.querySelector(`input[id="input_${productId}"]`);
+  if (input) {
+    const currentQuantity = parseInt(input.value);
+    input.value = currentQuantity + 1;
+    updateTotalCartPrice();
+  }
+}
 
-
-
+function qtyRemove(productId) {
+  const input = document.querySelector(`input[id="input_${productId}"]`);
+  if (input) {
+    const currentQuantity = parseInt(input.value);
+    if (currentQuantity > 1) {
+      input.value = currentQuantity - 1;
+      updateTotalCartPrice();
+    }
+    else{
+      removeFromCart(productId,'1')
+    }
+  }
+}
