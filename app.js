@@ -57,6 +57,12 @@ app.engine(
                         return options.inverse(this);
                 }
             },
+            trim: function(value, options) {
+                return value.split(" ")
+                .map(word => word[0].toUpperCase())
+                .join("");
+                // return m.format(formatToUse);
+            }
         },
     })
 );

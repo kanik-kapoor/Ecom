@@ -6,6 +6,13 @@ async function checkout(req,res){
     res.render("checkout", {user, cart, totalCartPrice})
 }
 
+async function error(req,res){
+    const errorMessage = req.query.message;
+    const statusCode = req.query.statusCode;
+    res.render("error", {errorMessage, statusCode})
+}
+
 module.exports = {
-    checkout
+    checkout,
+    error
 }
